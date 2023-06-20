@@ -4,4 +4,10 @@
 // module.exports = getDefaultConfig(__dirname);
 const {getDefaultConfig} = require('metro-config');
 const {resolver: defaultResolver} = getDefaultConfig.getDefaultValues();
-exp
+exports.resolver ={
+    ...defaultResolver,
+    sourceExts:[
+        ...defaultResolver.sourceExts,
+        "cjs",
+    ],
+};
