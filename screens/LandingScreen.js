@@ -6,21 +6,18 @@ const LandingScreen = () => {
     const navigation = useNavigation();
 
     useEffect(()=>{
-       const returnFunction =setTimeout(()=>{
+       setTimeout(()=>{
         navigation.navigate('log-in');
-       },800) 
-
-       return returnFunction;
-    },[])
+       },800)
+    },[navigation]) 
   return (
-    <View style= {styles.page} className="justify-center items-center flex-1 md:bg-red-500">
-        <View className="h-10 w-10 ">
-            {/* <Image source={require("../assets/logo.png")} resizeMode='contain' /> */}
-            <Image source={{uri:imgSrc}} style={styles.logo} resizeMode='contain' />
+    <View className="justify-center relative items-center flex-1 bg-gray-10">
+        <View className="h-10 w-10 absolute top-100">
+             <Image source={require("../assets/logo.png")} resizeMode='contain' />
         </View>
-        <View><ActivityIndicator/></View>
+        <View className=""><ActivityIndicator size={'large'} color="#00CCBB"/></View>
       
-      <Text className="text-sm ">Welcome to chiam-Ca</Text>
+      <Text className="text-[20px] font-light text-gray-600">Welcome...</Text>
     </View>
   )
 }

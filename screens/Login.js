@@ -22,6 +22,7 @@ const Login = () => {
         <TouchableOpacity className="bg-blue-400  p-4 flex items-center justify-center rounded-xl m active:bg-white active:border-blue-900 active:border-[2px]
         "><Text className="text-white text-xl active:text-blue-600">Continue</Text></TouchableOpacity>
         <TouchableOpacity className=""><Text className="text-blue-600 text-sm active:text-blue-600 text-right py-2">Forgot password?</Text></TouchableOpacity>
+        <TouchableOpacity className="" onPress={()=>navigation.navigate('sign-up')}><Text className="text-blue-600 text-sm active:text-blue-700  py-2 text-left">Don't have an account? Register</Text></TouchableOpacity>
       </View>
     </ScrollView>
   )

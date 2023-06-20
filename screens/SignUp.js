@@ -1,10 +1,9 @@
 import { View, Text, TextInput, TouchableOpacity,ScrollView } from 'react-native'
-import React from 'react'
-import {getAuth} from "firebase/auth"
-
+import React, { useState } from 'react'
+import {getAuth} from 'firebase/auth'
 const SignUp = () => {
+  const [error,setError] = useState('');
   const registerUser = () =>{
-    // make a call to firebase
     
   }
   return (
@@ -13,6 +12,7 @@ const SignUp = () => {
       <Text className="mt-100 p-8 mx-auto text-3xl font-semibold bg-white shadow-sm w-[100%]">Sign Up</Text>
 
       <View className="bg-white mt-10 gap-4  px-2 shadow-xl  py-6">
+        {error.length>1&&<Text>{error}</Text>}
 
         <Text className="text-[20px] font-[600]">Email</Text>
         <TextInput className="border-[2px] h-[50] rounded-xl focus:border-blue-500"/>
