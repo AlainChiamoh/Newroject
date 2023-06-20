@@ -79,7 +79,7 @@ const  MonthDetail = ({month, year}) => {
             </View>
             <Card>
                 <Text style={{fontWeight: "600",margin:5}}>Balance</Text>
-                <Text>XAF: {balance||0}</Text>
+                <Text style={{color:"green"}}>XAF: {balance||50000}</Text>
             </Card>
 
             {/*  expenses bar*/}
@@ -119,7 +119,7 @@ const  MonthDetail = ({month, year}) => {
             }}>
             <Card>
                 <Text style={{fontWeight: "600",margin:5}}>Income</Text>
-                <Text style={{color:"green"}}>XAF: {income||0}</Text>
+                <Text style={{color:"green"}}>XAF: {income||12000}</Text>
             </Card>
             <Card>
                 <Text style={{fontWeight: "600",margin:5}}>Expense</Text>
@@ -146,7 +146,7 @@ const  MonthDetail = ({month, year}) => {
                 }}
             >{JSON.stringify(route?.params)}</Text></View>
             <TouchableOpacity style={{
-                backgroundColor:"gray",
+                backgroundColor:"green",
                 borderRadius: 20,
                 flexDirection: 'row',
                 marginTop: -30,             

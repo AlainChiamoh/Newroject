@@ -1,10 +1,10 @@
 import {useState,React} from 'react';
-import { TouchableOpacity,StyleSheet } from 'react-native';
+import { TouchableOpacity,StyleSheet,SafeAreaView } from 'react-native';
 import { TextInput, Text } from 'react-native';
 import { Button } from 'react-native';
 import { View } from 'react-native';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
-import { Month, useQuery, useRealm } from '../models/Realm';
+//import { Month, useQuery, useRealm } from '../models/Realm';
 import { Alert } from 'react-native';
 import { Transaction } from '../models/Transaction';
 
@@ -19,8 +19,8 @@ import { Transaction } from '../models/Transaction';
  })
 function AddTransaction(props) {
     // REALM 
-    const realm = useRealm();
-    const result = useQuery('transactions')
+    //const realm = useRealm();
+    //const result = useQuery('transactions')
     const [showForm,setShowForm] = useState(false);
     const [transactionType, setTransactionType] = useState('');
     const [color, setColor] = useState('green');
@@ -35,45 +35,20 @@ function AddTransaction(props) {
         if(transactionType==='Expense') calcAmount *= -1;
 
         // add the transaction to the db
-        try{
-            realm.write(()=>{
-                // I will have to check for the month first and create it
-                let name = `${toString(date.getFullYear)}${toString(date.getMonth())}`
-                const q = `name ==  '${name}'`;
-                let months = realm.objects('Month').filtered(q);
-                if(!months.length){
-                    months = [
-                        realm.create(
-                            'Month',
-                            new Month({year:date.getFullYear(), target: 200000, monthId: date.getMonth()})
-                        )
-                    ]
-                }
-                const month0 = months[0];
-                const transaction = realm.create('Transaction', new Transaction({amount:calcAmount,category:category,date: date.toDateString()}));
-                month0.transactions.push(transaction);
-            })
-        }catch(e){
-            Alert.alert('Error Adding Transaction')
-        }
-        const newTransaction = {
-                transaction_id,
-                date: date.toDateString,
-                amount: calcAmount,
-                category,
-            }
+        
 
         
         navigation.navigate('month-detail',
-                newTransaction );
+        //pass the new Transaction back to monthly Detail
+            );
     }
 
     return (
-        <View style={{
-            backgroundColor: 'whitesmoke',
+        <SafeAreaView style={{
+            backgroundColor: 'pink',
             flexGrow:1,
             alignItems: 'center'
-        }}>
+        }} className="space-y-10 bg-transparent">
             
             {!showForm && <View style={{
                 backgroundColor: 'white',
@@ -98,16 +73,26 @@ function AddTransaction(props) {
                 
             </View>}
               
-            {showForm &&<View>
-                <Text style={{alignSelf:'center', fontWeight: '700', color: {color}, fontSize:20, marginVertical:20}}>New {transactionType}</Text>
+            {showForm &&<View className="  w-[100%] flex-1 py-10 px-2 space-y-5 bg-transparent">
+                {/* <Text style={{alignSelf:'center', fontWeight: '700', color: {color}, fontSize:20, marginVertical:20}}>New {transactionType}</Text>
                 <TextInput placeholder='Enter Category' style={style.awesome} 
                 onChangeText={(text)=>setCategory(text)}></TextInput>
                 <TextInput placeholder='Enter Amount' keyboardType='numeric' style={style.awesome} 
                     onChangeText={(text)=>setAmount(text)}></TextInput>
-                <Button title='Add' onPress={onSubmitHandler}/>
+                <Button title='Add' onPress={onSubmitHandler}/> */}
+                <Text className="text-3xl font-[600] text-center">{transactionType}</Text>
+                <Text className="text-[20px] font-[600]">Category</Text>
+                <TextInput className="border-[2px] h-[50] rounded-xl focus:border-blue-500" />
 
+                <Text className="text-[20px] font-[600]">Amount</Text>
+                <TextInput className="border-[2px] h-[50] rounded-xl focus:border-blue-500" keyboardType='number-pad'/>
+                <View className="flex-row items-center justify-center p-5">
+                <TouchableOpacity className={`${transactionType==="Income"?'bg-green-500':'bg-red-500'} px-6 py-3 rounded-xl`}><Text className="text-white font-medium" >{`Add ${transactionType}`}</Text></TouchableOpacity>
+                </View>
+        
             </View>}
-        </View>
+            
+        </SafeAreaView>
     );
 }
 
