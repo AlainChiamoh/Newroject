@@ -1,10 +1,36 @@
-import { View, Text, TextInput, TouchableOpacity,ScrollView } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity,ScrollView, Alert } from 'react-native'
 import React, { useState } from 'react'
-import {getAuth} from 'firebase/auth'
+import { app } from '../firebase';
+import {createUserWithEmailAndPassword, getAuth} from 'firebase/auth';
+import { useNavigation } from '@react-navigation/native';
 const SignUp = () => {
   const [error,setError] = useState('');
-  const registerUser = () =>{
+  const [username,setUsername] = useState('');
+  const [email,setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigation = useNavigation()
+  const registerUser = async () =>{
+    const auth = getAuth(app);
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    Alert.alert('Successfully registered');
+    navigation.navigate('month-detail',{
+      params:{
+          user
+      }
+  })
     
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // .
+    Alert.alert(errorMessage);
+    setError(errorMessage)
+  })
   }
   return (
 
@@ -15,13 +41,20 @@ const SignUp = () => {
         {error.length>1&&<Text>{error}</Text>}
 
         <Text className="text-[20px] font-[600]">Email</Text>
+        <TextInput 
+          onChangeText={(text)=>setEmail(text)}
+          className="border-[2px] h-[50] rounded-xl focus:border-blue-500"/>
+
+        <Text 
+          onChangeText={(text)=>setUsername(text)}
+          className="text-[20px] font-[600]">Username</Text>
         <TextInput className="border-[2px] h-[50] rounded-xl focus:border-blue-500"/>
 
-        <Text className="text-[20px] font-[600]">Username</Text>
-        <TextInput className="border-[2px] h-[50] rounded-xl focus:border-blue-500"/>
-
-        <Text className="text-[20px] font-[600]">Password</Text>
-        <TextInput className="border-[2px] h-[50] rounded-xl focus:border-blue-500" secureTextEntry/>
+        <Text 
+          className="text-[20px] font-[600]">Password</Text>
+        <TextInput 
+          onChangeText={(text)=>setPassword(text)}
+          className="border-[2px] h-[50] rounded-xl focus:border-blue-500" secureTextEntry/>
 
         <Text className="text-[20px] font-[600]">Confirm Password</Text>
         <TextInput className="border-[2px] h-[50] rounded-xl focus:border-blue-500" secureTextEntry/>

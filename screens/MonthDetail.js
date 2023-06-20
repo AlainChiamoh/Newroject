@@ -10,6 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
+import { auth } from '../firebase';
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
 const style = StyleSheet.create({
     head:{
@@ -28,6 +29,8 @@ const style = StyleSheet.create({
 
 
 const  MonthDetail = ({month, year}) => {
+    // user
+    const user = auth.currentUser;
     const navigation = useNavigation();
     const route = useRoute();
     const [newTransaction,setNewTransaction] =useState( [route?.params] || []);
